@@ -1,7 +1,12 @@
 # simple socket.io chat app
 
-
-<p align="center"><img height="700" src=""></p>
+```
+io.on('connection', socket => {
+  socket.emit('request', /* … */); // emit an event to the socket
+  io.emit('broadcast', /* … */); // emit an event to all connected sockets
+  socket.on('reply', () => { /* … */ }); // listen to the event
+});
+```
 
 ## Project setup
 ```

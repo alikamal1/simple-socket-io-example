@@ -27,12 +27,14 @@
             var socket = io();
             $('form').submit(function(e){
                 e.preventDefault();
-                socket.emit('chat-message', $('#m').val());
+                // client send new message event to server
+                socket.emit('new-message', $('#m').val());
                 $('#m').val('');
                 return false;
             });
 
-            socket.on('chat-message', function(msg){
+            // client received new message evnet from server
+            socket.on('new-message', function(msg){
                 $('#messages').append($('<li>').text(msg));
             });
 

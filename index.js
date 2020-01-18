@@ -8,6 +8,7 @@ app.get('/', function(req, res) {
 
 
 io.on('connection', function(socket) {
+    io.emit('new-user', 'new user connect to chat');
     console.log('a user connected');
 
     // server received new message event
@@ -18,6 +19,7 @@ io.on('connection', function(socket) {
     });
 
     socket.on('disconnect', function(){
+        io.emit('left-user', 'user left the chat');
         console.log('user disconnected');
     });
 });

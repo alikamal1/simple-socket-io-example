@@ -9,13 +9,18 @@
       form { background: rgb(32, 126, 202); padding: 3px; position: fixed; bottom: 0; width: 100%; }
       form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
       form button { width: 9%; background: rgb(238, 251, 255); border: none; padding: 10px; font-size: 16px; color: rgb(32, 126, 202);font-weight: bold; }
+      #users { list-style-type: none; margin: 0; padding: 0; }
+      #users li { padding: 5px 10px; background: rgb(219, 0, 0); color: white; }
+      #users li:nth-child(odd) { background: rgb(0, 77, 219); }
+
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
     </style>
   </head>
   <body>
-      <h1>simple socket.io chat app</h1>
+    <h1>simple socket.io chat app</h1>
+    <ul id="users"></ul><br>
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
@@ -31,6 +36,16 @@
                 socket.emit('new-message', $('#m').val());
                 $('#m').val('');
                 return false;
+            });
+
+            // client received new user connectedd evnet from server
+            socket.on('new-user', function(msg){
+                $('#users').append($('<li>').text(msg));
+            });
+
+            // client received user left evnet from server
+            socket.on('left-user', function(msg){
+                $('#users').append($('<li>').text(msg));
             });
 
             // client received new message evnet from server
